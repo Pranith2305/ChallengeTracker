@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db.js');
 
 const app = express();
 
@@ -12,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-const challengeRoutes = require("./routes/challenges");
-const progressRoutes = require("./routes/progress");
+const challengeRoutes = require("./routes/challenge.js");
+const progressRoutes = require("./routes/progress.js");
 
 app.use("/challenges", challengeRoutes);
 app.use("/progress", progressRoutes);

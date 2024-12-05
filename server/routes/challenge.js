@@ -1,8 +1,7 @@
-import express from "express";
-import Challenge from "../models/Challenge";
+const express = require('express');
+const Challenge = require("../models/Challenge")
 
 const router = express.Router();
-
 router.get('/', async (req, res)=> {
     try{
         const challenges = await Challenge.find();
