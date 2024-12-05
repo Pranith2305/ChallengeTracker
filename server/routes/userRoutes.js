@@ -49,4 +49,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// Profile route - no authentication for testing
+router.get('/profile', async (req, res) => {
+    try {
+        // Fetch all users for testing purposes
+        const users = await User.find().select('-password'); // Exclude passwords
+        res.json(users); // Send back the list of users
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;
