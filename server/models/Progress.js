@@ -1,11 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const progressSchema = new mongoose.Schema({
-  userId: { type: String, required: true }, // Replace with ObjectId if using users collection
-  challengeId: { type: mongoose.Schema.Types.ObjectId, ref: "Challenge" },
-  streak: { type: Number, default: 0 },
-  points: { type: Number, default: 0 },
-  lastLogged: { type: Date },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    challengeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Challenge', required: true },
+    streak: { type: Number, default: 0 },
+    points: { type: Number, default: 0 },
+    lastLogged: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model("Progress", progressSchema);
+const Progress = mongoose.model('Progress', progressSchema);
+module.exports = Progress;
