@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const connectDB = require('./config/db.js');
+const connectDB = require('./config/db'); // Ensure correct path to your db.js file
 
 const app = express();
 
@@ -12,11 +12,14 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-const challengeRoutes = require("./routes/challenge.js");
-const progressRoutes = require("./routes/progress.js");
+const challengeRoutes = require("./routes/challenge"); 
+const progressRoutes = require("./routes/progress"); 
+const userRoutes = require("./routes/userRoutes");
 
-app.use("/challenges", challengeRoutes);
-app.use("/progress", progressRoutes);
+app.use("/api/challenges", challengeRoutes); 
+app.use("/api/progress", progressRoutes); 
+app.use("/api/users", userRoutes)
+
 
 // Start Server
 const PORT = process.env.PORT || 5000;
