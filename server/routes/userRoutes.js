@@ -56,7 +56,7 @@ const authenticateToken = (req, res, next) => {
         return res.sendStatus(401); // Unauthorized if no token is provided
     }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    jwt.verify(token, "mySuperSecretKey", (err, user) => {
         if (err) {
             return res.sendStatus(403); // Forbidden if token is invalid
         }
