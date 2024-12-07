@@ -49,12 +49,36 @@ router.post('/login', async (req, res) => {
     }
 });
 
+const authenticateToken = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1]; // Get token from Authorization header
+
+    if (!token) {
+        return res.sendStatus(401); // Unauthorized if no token is provided
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Forbidden if token is invalid
+        }
+        req.user = user; // Attach user info to request object
+        next(); // Proceed to the next middleware or route handler
+    });
+};
+
 // Profile route - no authentication for testing
-router.get('/profile', async (req, res) => {
+router.get('/profile', authenticateToken, async (req, res) => {
     try {
+        const userId = req.query.userId;
+
+        if(!userId){
+            return res.json({error : 'User Id is required!'});
+        }
         // Fetch all users for testing purposes
-        const users = await User.find().select('-password'); // Exclude passwords
-        res.json(users); // Send back the list of users
+        const user = await User.findById(userId).select('-password'); // Exclude passwords
+        if(!user){
+            return res.json({error : 'User doesnot exists!'});
+        }
+        res.json(user);
     } catch (error) {
         console.error('Error fetching profile:', error);
         res.status(500).json({ error: 'Internal server error' });
